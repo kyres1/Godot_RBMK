@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://hvbl0pm3wwa5"]
+
+[ext_resource type="Texture2D" uid="uid://c2cuyd1j2rcp" path="res://assets/icons/uranium.png" id="1_0jeqf"]
+[ext_resource type="Script" path="res://scripts/physics/Uranium.gd" id="1_m8yf3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t61o3"]
+radius = 32.0
+
+[node name="Uranium" type="Node2D"]
+script = ExtResource("1_m8yf3")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." groups=["uranium"]]
+position = Vector2(0, -1)
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+max_contacts_reported = 10
+contact_monitor = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" groups=["uranium"]]
+shape = SubResource("CircleShape2D_t61o3")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_0jeqf")

@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cgfcxhij003mf"]
+
+[ext_resource type="Texture2D" uid="uid://5nlm64c7df16" path="res://assets/icons/neutron.png" id="1_ik200"]
+[ext_resource type="Script" path="res://scripts/physics/collision.gd" id="1_x7ndw"]
+[ext_resource type="Texture2D" uid="uid://c2cuyd1j2rcp" path="res://assets/icons/uranium.png" id="2_3qjwl"]
+[ext_resource type="Script" path="res://scripts/physics/fission.gd" id="3_pg3t3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sryko"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h1vky"]
+radius = 32.0
+
+[node name="Scene" type="Node2D"]
+
+[node name="Neutron" type="Node2D" parent="." groups=["neutrons"]]
+position = Vector2(358, 330)
+script = ExtResource("1_x7ndw")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Neutron" groups=["neutron"]]
+gravity_scale = 0.0
+max_contacts_reported = 10
+contact_monitor = true
+constant_force = Vector2(55, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Neutron/RigidBody2D" groups=["neutron"]]
+shape = SubResource("CircleShape2D_sryko")
+
+[node name="Sprite2D" type="Sprite2D" parent="Neutron/RigidBody2D"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_ik200")
+
+[node name="Uranium" type="Node2D" parent="." groups=["uranium"]]
+position = Vector2(584, 330)
+script = ExtResource("3_pg3t3")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Uranium" groups=["uranium"]]
+gravity_scale = 0.0
+max_contacts_reported = 10
+contact_monitor = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Uranium/RigidBody2D" groups=["uranium"]]
+shape = SubResource("CircleShape2D_h1vky")
+
+[node name="Sprite2D" type="Sprite2D" parent="Uranium/RigidBody2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_3qjwl")
+
+[connection signal="body_entered" from="Neutron/RigidBody2D" to="Neutron" method="_on_rigid_body_2d_body_entered"]
+[connection signal="body_entered" from="Uranium/RigidBody2D" to="Uranium" method="_on_rigid_body_2d_body_entered"]

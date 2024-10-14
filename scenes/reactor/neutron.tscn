@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqr0nagogfsap"]
+
+[ext_resource type="Script" path="res://scripts/physics/Neutron.gd" id="1_p70qk"]
+[ext_resource type="Texture2D" uid="uid://5nlm64c7df16" path="res://assets/icons/neutron.png" id="2_hynby"]
+[ext_resource type="Script" path="res://scenes/reactor/Neutron_Constant.gd" id="2_pg7fu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fj1c3"]
+radius = 16.0
+
+[node name="Neutrons" type="Node2D" groups=["neutrons"]]
+script = ExtResource("1_p70qk")
+
+[node name="Neutron-0" type="RigidBody2D" parent="." groups=["neutron"]]
+collision_layer = 0
+mass = 0.01
+gravity_scale = 0.0
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("2_pg7fu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Neutron-0" groups=["neutron"]]
+shape = SubResource("CircleShape2D_fj1c3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Neutron-0"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_hynby")
+
+[connection signal="body_entered" from="Neutron-0" to="." method="_on_rigid_body_2d_body_entered"]
