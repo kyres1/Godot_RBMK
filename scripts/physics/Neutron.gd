@@ -1,14 +1,20 @@
-extends Node2D
+extends RigidBody2D
+var speed = 300
+var rng = RandomNumberGenerator.new()
+var direction = rng.randf_range(-PI,PI)
+var velocity = Vector2(speed, 0).rotated(direction)
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+	#get_node(".").rotation = direction
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _physics_process(delta):
+	var collision_info = move_and_collide(velocity * delta)
+	if collision_info:
+		velocity = velocity.bounce(collision_info.get_normal())
 
-func _on_rigid_body_2d_body_entered(body):
-	if body.is_in_group("uranium"):
-		print("Neutron freed...")
+
+func _on_body_entered(body):
+	if body.is_in_group("uranium") or body.is_in_group("control_rod"):
 		queue_free()

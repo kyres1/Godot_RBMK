@@ -9,8 +9,8 @@ radius = 9.0
 [node name="Uranium" type="Node2D" groups=["uranium"]]
 
 [node name="RigidBody2D" type="RigidBody2D" parent="." groups=["uranium"]]
-collision_layer = 0
-collision_mask = 2
+collision_layer = 2
+collision_mask = 0
 collision_priority = 10.0
 mass = 0.01
 gravity_scale = 0.0
@@ -21,10 +21,11 @@ contact_monitor = true
 script = ExtResource("1_cvh3t")
 
 [node name="Sprite2D" type="Sprite2D" parent="RigidBody2D" groups=["uranium"]]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_sdld3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" groups=["uranium"]]
+scale = Vector2(3.6, 3.6)
 shape = SubResource("CircleShape2D_00qa8")
 
-[connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="neutron_collided"]
+[connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_body_entered"]
